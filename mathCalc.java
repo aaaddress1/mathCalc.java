@@ -25,9 +25,9 @@ public class mathCalc {
 	public static int compute(int x, int y, char op) {
 		switch (op) {
 			case '+': return x + y;
-			case '-': return x - y;
+			case '-': return y - x;
 			case '*': return x * y;
-			case '/': return x / y;
+			case '/': return y / x;
 			default: return -1; // worst case
 		}
 	}
