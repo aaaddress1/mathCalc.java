@@ -1,5 +1,5 @@
 /**
- * @file infix_calc.java
+ * @file mathCalc.java
  * @author Sheng-Hao Ma (aaaddress1, aka adr)
  * @date 2017/03/15
  *
@@ -7,7 +7,7 @@
 **/
 
 import java.util.*;
-public class infix_calc {
+public class mathCalc {
 
 	public static boolean isOperator(char ch) {
 		return 	ch == '+' || ch == '-' || ch == '*' || ch == '/';
