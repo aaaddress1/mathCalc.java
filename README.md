@@ -1,9 +1,9 @@
-#mathCalc.java
+# mathCalc.java
 
 
-###Description
+### Description
 compute math formul from text (infix syntax) in Java
 
-###Demo
+### Demo
 
 ![](demo.gif)
