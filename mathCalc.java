@@ -10,24 +10,26 @@ import java.util.*;
 public class mathCalc {
 
 	public static boolean isOperator(char ch) {
-		return 	ch == '+' || ch == '-' || ch == '*' || ch == '/';
+		return 	ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
 	}
 
 	public static int level(char ch) {
 		switch (ch) {
 			case '(': case ')': return 1;
 			case '+': case '-': return 2;
-			case '*': case '/': case '%': return 3;
+			case '*': case '/': case '^': return 3;
+			//case '^': return -1;
 			default: return ch >= '0' && ch <= '9'? /* normal number */ 0 : /* worst case */-1;
 		}
 	}
 
 	public static int compute(int x, int y, char op) {
 		switch (op) {
-			case '+': return x + y;
+			case '+': return y + x;
 			case '-': return y - x;
-			case '*': return x * y;
+			case '*': return y * x;
 			case '/': return y / x;
+			case '^': return (int)Math.pow(y, x);
 			default: return -1; // worst case
 		}
 	}
@@ -41,7 +43,6 @@ public class mathCalc {
 		Stack<Character> operatorStack = new Stack<Character>();
 
 		for (char ch: mathicFmul.toCharArray()) {
-
 			/*
 				left parenthesis, push into operator stack for preparing
 			*/
@@ -77,8 +78,18 @@ public class mathCalc {
 					operatorStack.push(ch);
 
 				else {
-					while (!operatorStack.isEmpty() && level(ch) <= level(operatorStack.peek()))
+
+					/*
+						 power operator is right-associative. if current operator is power operator and there've been
+						 power operator in the stack, we still push current operator into operator stack until
+						 the priority of current operator is bigger than the operator in the stack.
+					*/
+					if (ch == '^') while (!operatorStack.isEmpty() && level(ch) < level(operatorStack.peek()))
 						valueStack.push(compute(valueStack.pop(), valueStack.pop(), operatorStack.pop()));
+
+					else while (!operatorStack.isEmpty() && level(ch) <= level(operatorStack.peek()))
+						valueStack.push(compute(valueStack.pop(), valueStack.pop(), operatorStack.pop()));
+
 					operatorStack.push(ch);
 				}
 
@@ -100,7 +111,6 @@ public class mathCalc {
 		return valueStack.pop();
 	}
 	public static void main(String[] args) {
-
 		System.out.println("welcome to magic math calculator!");
 		System.out.println("@author: aaaddress1@gmail.com");
 		System.out.println("");
